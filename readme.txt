@@ -69,4 +69,6 @@ To contact, leave a comment on the plugin website @ http://restoredisrael.org/bl
 * Added the jQuery hover/pop up support
 
 
-
+= 1.2 =
+* Completely changed the javascript to a new code base. (fixes positioning bugs)
+* Made some changes to the php file

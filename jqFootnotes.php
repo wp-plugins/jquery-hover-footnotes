@@ -5,7 +5,7 @@ Plugin Name: JQuery Hover Footnotes
 Plugin URI: http://restoredisrael.org/blog/961/footnote-plugin-test-page/
 Description: Lets you add footnotes with qualifiers of you're choosing, then dynamically displays them on hover-over. See readme file for detailed notes and instructions.
 Author: Lance Weaver
-Version: 1.1
+Version: 1.2
 License: GPLv2
 */
 
@@ -21,9 +21,11 @@ see http://codex.wordpress.org/Administration_Menus for edit guidance
 TODO
 -add an option to turn on and off the dynamic hover capabilities. (keep js & css from loading!)
 -add option to change the post qualifiers <ref>1<ref> instead of {{1}}?
+-add links at top of pages with hide/show footnotes, & footnote popups on/off
 */
 
 
+#if (is_admin()){  #only run this in the admin area
 		
 # Add some default options to db if they don't already exist.  NO Ucase! [add_option() only add if nothing already in db]
  add_option("jqfoot_anchor_open", '<sup>[' ); 		#html/symbols to wrap around footnote anchor link.
@@ -78,11 +80,11 @@ function jqFootnotes_options_subpanel() {
 
 	
 								  <tr valign="top">
-										<th scope="row">Footnote Link Tags</th>
+										<th scope="row">Footnote Ref Marks</th>
 										<td>
 										 <input type="text" name="jqfootnotes_anchor_open" size="20" value="<?php echo get_option('jqfoot_anchor_open'); ?>" />    &nbsp;&nbsp;
 										 <input type="text" name="jqfootnotes_anchor_close" size="20" value="<?php echo get_option('jqfoot_anchor_close'); ?>" />
-											<br />You can keep the default, which is to have footnotes appear in the page as a supercript like this <sup>[1]</sup> or you can have them
+											<br />The default format for the footnote reference mark is to have them appear in the page as a supercript like this <sup>[1]</sup> or you can have them
 											without the brackets <sup>1</sup> or brackets without superscript [1] .  Chose what you will, but beware that some complex qualifiers might break the plugin, so check that things
 											work after you update this. (if it breaks, just change it back)
 										</td>
@@ -128,6 +130,8 @@ function jqFootnotes_options_subpanel() {
 <?php
 }
 
+#}   #end is_admin() area
+
 
 # END ADMIN CONSOLE ################################################################
 
@@ -143,8 +147,8 @@ function jqFootnotes_options_subpanel() {
 	wp_enqueue_script('footenote_js', get_option('siteurl') . '/wp-content/plugins/jq-Hover-Footnotes/footnote-voodoo.js', array('jquery'));
 	// it would save load to put these css rules into your template css and comment this next line out
 	wp_enqueue_style('footenote_css', get_option('siteurl') . '/wp-content/plugins/jq-Hover-Footnotes/footnote-voodoo.css');			
-  }
-
+  
+  } //end !is_admin()
 
 
   //define $data as the page text passed to this function remember it is basically 'the_content' throughout this script
@@ -182,39 +186,29 @@ function jqFootnotes_options_subpanel() {
 			// now we'll find and replace actual footnotes in 'the_content'   with substr_replace(original string, replacement string, starting point, [length])
 			$data = substr_replace($data, '', $foot_start - strlen($foot_delim), $foot_end - $foot_start + (2*strlen($foot_delim)));
 
-			// INLINE FOOTNOTE LINK: html for superscript footnote link/number
+			// INLINE FOOTNOTE REFERENCE MARK LINK: html for superscript footnote link/number
 			// replace foot_num with formatted html in $data/'the_content' using str_replace(search_for, replacement string, original string, [# of replacements])
 			// orig: $data = str_replace('{{'.$foot_num.'}}', '<a href="#foot_'.$foot_num.'" name="foot_src_'.$foot_num.'">'.$before_anchor.$foot_num.$after_anchor.'</a>', $data);
-			$data = str_replace('{{'.$foot_num.'}}', '<a class="footnote" href="#footnote-'.$foot_num.'" id="ref-footnote-'.$foot_num.'">'.$before_anchor.$foot_num.$after_anchor.'</a>', $data);
+			$data = str_replace('{{'.$foot_num.'}}', '<a class="fn-ref-mark" href="#footnote-'.$foot_num.'" id="ref-footnote-'.$foot_num.'">'.$before_anchor.$foot_num.$after_anchor.'</a>', $data);
 
 		}
 
 		// FOOTNOTE HEADING: html for the title of footer footnote section
 		// by using .= we just append it to the end of 'the_content'
 		//old: '.$footnotes_title.'</span><br />';
-		$data .= '<br /><br /><div class="footnotes2"><b>'.$footnotes_title.'</b> &nbsp;&nbsp;&nbsp;('.$back_image.' returns to text)<br /><ol>';  	
+		$data .= '<br /><br /><div id="footnote-list"><span id=fn-heading>'.$footnotes_title.'</span> &nbsp;&nbsp;&nbsp;('.$back_image.' returns to text)<br /><ol>';  	
 
-		// ACTUAL FOOTNOTES: html for footnotes in footer area
+		// ACTUAL FOOTNOTE TEXT: html for footnotes in footer area
 		foreach($foots_text as $foot_text){
-			$data .= '<li id="footnote-'.$foot_text[1].'">'.$foot_text[0].'<a href="#ref-footnote-'.$foot_text[1].'">'.$back_image.'</a></li>';  
+			$data .= '<li id="footnote-'.$foot_text[1].'" class="fn-text">'.trim($foot_text[0]).'<a href="#ref-footnote-'.$foot_text[1].'">'.$back_image.'</a></li>';  
 		}
 		
 		//append the final </ol> and close the </div>
 		$data .= '</ol></div>';
 
-
 	}
 
-	// CURRENT
-	// here's the upper html: <a href="http://restoredisrael.org/blog/693/footnotes-plugin/#foot_1"  name="foot_src_1">[1]</a>
-	// here's the footnote heading: <span class="yafootnote_head">FOOTNOTES</span><br />
-	// here's the lower html: <span class="yafootnote_body"><a name="foot_1">1.</a>&nbsp; Footnote Text.<a href="http://restoredisrael.org/blog/693/footnotes-plugin/#foot_src_1" >&uarr;</a></span>
 
-	// NEEDS TO BE
-	// upper: <sup><a class="footnote" href="http://restoredisrael.org/blog/961/footnote-plugin-test-page/#footnote-11"  id="ref-footnote-11">1</a></sup> 
-	// lower: <div class="footnotes2"> <ol> 
-	//          <li id="footnote-11">My first footnote.<a href="http://restoredisrael.org/blog/961/footnote-plugin-test-page/#ref-footnote-11" >&crarr;</a> </li> 
-	
 	return $data;
 
   }
@@ -225,6 +219,7 @@ function jqFootnotes_options_subpanel() {
   // add_filter( $tag, $function_to_add, $priority, $accepted_args )
 
   add_filter('the_content', 'jqFootnotes', 1, 1);
+
 
 
 
