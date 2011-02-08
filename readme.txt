@@ -56,8 +56,7 @@ the directory of the stable readme.txt, so in this case, `/tags/4.3/screenshot-1
 This plugin is a fork and combination of several other plugins.
 
 PHP-
-stratos at <a href='http://www.stratos.me/wp-plugins/yafootnotes/'>YaFootnotes</a> 
-Mr. Mike Nichols from http://anxietypanichealth.com/
+stratos at <a href='http://www.stratos.me/wp-plugins/yafootnotes/'>YaFootnotes</a> and <a href='http://anxietypanichealth.com/'>Mike Nichols</a>
 
 JS-
 Also <a href='http://ignorethecode.net/blog/2010/04/20/footnotes/'>Lukas Mathis</a> and <a href='http://moronicbajebus.com/blog/footnotepopup/'>Seamus Leahy</a>
@@ -68,7 +67,7 @@ Also <a href='http://ignorethecode.net/blog/2010/04/20/footnotes/'>Lukas Mathis<
 == Contact ==
 
 Developed by Lance Weaver.
-To contact, leave a comment on the plugin <a href='http://restoredisrael.org/blog/961/footnote-plugin-test-page/'>Lukas Mathis</a>
+To contact, leave a comment on the plugin <a href='http://restoredisrael.org/blog/961/footnote-plugin-test-page/'>website</a>
 
 
 
