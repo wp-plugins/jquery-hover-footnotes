@@ -1,0 +1,62 @@
+
+
+/* floating footnote div
+This will be loaded on EVERY page, and its difficult to get around this 
+in wordpress. So its better if you paste this into your template's css
+and then disable the "enque css" line in the php file...
+---just remember that you must do it again if you change templates!---
+ */
+
+
+	/*
+       a.footnote {
+         font-size: .86em;
+         vertical-align: super;
+	  background-color: #FFF;
+       }
+	 */
+
+    .footnotepopup-popup {
+       position: absolute;
+       width:400px;
+       opacity:0.95;
+	overflow:visible;
+       background-color: white;
+	padding:3px;
+	padding-left:12px;
+	padding-right:12px;
+	border:1px solid #CDBBB5;
+	box-shadow:#555 0 0 10px;
+	-webkit-box-shadow:#555 0 0 10px;
+	-moz-box-shadow:0 0 10px #555;
+     }
+
+
+
+
+
+ 
+
+
+
+
+/*   COMMENTED OUT.. IS FOR JS THAT WONT WORK.
+
+#footnotediv {
+            position:absolute;
+            width:100px;
+            opacity:0.9;
+	heigth:100px;
+	z-index:10;
+	overflow:visible;
+	background-color:#FF66FF;
+	padding:3px;
+	padding-left:12px;
+	padding-right:12px;
+	border:1px solid #CDBBB5;
+	box-shadow:#555 0 0 10px;
+	-webkit-box-shadow:#555 0 0 10px;
+	-moz-box-shadow:0 0 10px #555;
+}
+
+*/
