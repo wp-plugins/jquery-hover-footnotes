@@ -3,7 +3,7 @@
 /*
 Plugin Name: JQuery Hover Footnotes
 Plugin URI: http://restoredisrael.org/blog/961/footnote-plugin-test-page/
-Description: Lets you add footnotes with qualifiers of you're choosing, then dynamically displays them on hover-over. See readme file for detailed notes and instructions.
+Description: Lets you add footnotes with qualifiers of you're choosing, then dynamically displays them when you hover over.
 Author: Lance Weaver
 Version: 1.2
 License: GPLv2

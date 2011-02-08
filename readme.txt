@@ -3,7 +3,7 @@ Contributors: Lance
 Tags: footnotes, jquery, popup, hover
 Requires at least: 2.8
 Tested up to: 3.0.5
-Stable tag: trunk
+Stable tag: 1.2
 
 
 
