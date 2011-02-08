@@ -56,9 +56,6 @@ This plugin is a fork and combination of several other plugins.
 PHP-
 stratos at <a href='http://www.stratos.me/wp-plugins/yafootnotes/'>YaFootnotes</a> and <a href='http://anxietypanichealth.com/'>Mike Nichols</a>
 
-JS-
-Also <a href='http://ignorethecode.net/blog/2010/04/20/footnotes/'>Lukas Mathis</a> and <a href='http://moronicbajebus.com/blog/footnotepopup/'>Seamus Leahy</a>
-
 
 
 
