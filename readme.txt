@@ -3,7 +3,7 @@ Contributors: Lance
 Tags: footnotes, jquery, popup, hover
 Requires at least: 2.8
 Tested up to: 3.0.5
-Stable tag: 1.2
+Stable tag: trunk
 
 
 
@@ -42,11 +42,9 @@ enjoy.
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.png. Note that the screenshot is taken from
-the directory of the stable readme.txt, so in this case, `/tags/4.3/screenshot-1.png`
-2. Example of a footnote popup, caused by hovering over the link footnote-example.png.
-3. Format required to add footnotes to the post page footnote_format.jpg.
-4. Format of the html code produced by the php script footnote-code.png.
+1. This is the backend panel. It lets you change a few options such as how you want the footnote styled, the footnote section name, and the back symbol.
+2. Example of a post using footnotes. The box shown appears on mouseover.
+3. Example of adding a footnote in the backend post page.  You simply add the markup {{#}} & [[#]]my note[[#]] around your footnotes.
 
 
 
