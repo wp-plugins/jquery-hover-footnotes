@@ -8,8 +8,6 @@ and then disable the "enque css" line in the php file...
 /* Style The hover popup  */
 #footnotediv {
 	position:absolute;
-	width:400px;
-	overflow:visible;
 	background-color:white;
 	padding:3px;
 	padding-left:12px;
