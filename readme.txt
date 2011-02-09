@@ -26,6 +26,11 @@ This is my post and I want to add a footnote{{1}} in the text. By default it wil
 see the plugin webpage or the screenshots for examples.
 
 
+visit the sites page <a href='http://restoredisrael.org/blog/961/footnote-plugin-test-page/'>here</a>
+
+
+
+
 
 
 == Installation ==
