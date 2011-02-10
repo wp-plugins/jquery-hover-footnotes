@@ -32,7 +32,7 @@ TODO
  add_option("jqfoot_anchor_close", ']</sup>' ); 		#html/symbols to wrap around footnote anchor link.
  add_option("jqfoot_title", 'Footnotes' );	#Title which will appear as a heading above the footnote list in the footer.
  add_option("jqfoot_backimg", '&crarr;' );
- add_option("jqfoot_hidefnlist", TRUE );
+ add_option("jqfoot_hidefnlist", FALSE );
  add_option("jqfoot_nohover", FALSE );
 
 
@@ -111,7 +111,7 @@ function jqFootnotes_options_subpanel() {
 										<td>
 										 <input type="text" name="jqfootnotes_backimg" size="50" value="<?php echo get_option('jqfoot_backimg'); ?>" /> 
 											 <br />Symbol/Link which appears next to footnote which will take the user back up to the text.
-											the default is the ANSI character &crarr; (&crarr&#059;) but you could also do (&uarr&#059;) for &uarr;. Or an image such as
+											the default is the ANSI character &crarr; (&#38crarr&#059;) but you could also do (&#38uarr&#059;) for &uarr;. Or an image such as
 											&lt;img alt="back" src="/footnoteback.png"&gt; or just the word "back".  [Type ansi characters, dont copy and paste from this note!]
 											
 										</td>
@@ -166,12 +166,13 @@ function jqFootnotes_options_subpanel() {
 
  // register the js and css scripts.. but not on admin pages
 
-  if (!is_admin()){
+  if (!is_admin() ){
+    if (get_option('jqfoot_nohover')!=TRUE){		//if its not checked load the JS/CSS
 	//wp_enqueue_script('jquery');	//no need here, loads as dependancy in next line down
 	wp_enqueue_script('footenote_js', plugins_url('/footnote-voodoo.js', __FILE__), array('jquery'));
 	// it would save load to put these css rules into your template css and comment this next line out
 	wp_enqueue_style('footenote_css', plugins_url('/footnote-voodoo.css', __FILE__) );			
-  
+    }
   } //end !is_admin()
 
 
