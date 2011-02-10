@@ -5,7 +5,7 @@ Plugin Name: JQuery Hover Footnotes
 Plugin URI: http://restoredisrael.org/blog/961/footnote-plugin-test-page/
 Description: Lets you add footnotes with qualifiers of you're choosing, then dynamically displays them when you hover over.
 Author: Lance Weaver
-Version: 1.2
+Version: 1.4
 License: GPLv2
 */
 
@@ -32,6 +32,8 @@ TODO
  add_option("jqfoot_anchor_close", ']</sup>' ); 		#html/symbols to wrap around footnote anchor link.
  add_option("jqfoot_title", 'Footnotes' );	#Title which will appear as a heading above the footnote list in the footer.
  add_option("jqfoot_backimg", '&crarr;' );
+ add_option("jqfoot_hidefnlist", TRUE );
+ add_option("jqfoot_nohover", FALSE );
 
 
 # BEGIN ADMIN CONSOLE
@@ -56,6 +58,8 @@ function jqFootnotes_options_subpanel() {
         update_option('jqfoot_anchor_close', $_POST['jqfootnotes_anchor_close']);
         update_option('jqfoot_title', $_POST['jqfootnotes_title']);
         update_option('jqfoot_backimg', $_POST['jqfootnotes_backimg']);
+        update_option('jqfoot_hidefnlist', $_POST['jqfootnotes_hidefnlist']);
+        update_option('jqfoot_nohover', $_POST['jqfootnotes_nohover']);
         ?>
 	<div class="updated"><p><strong><?php  _e('Options saved.', 'jQ Footnotes')?></strong></p></div><?php
     } ?>
@@ -112,6 +116,26 @@ function jqFootnotes_options_subpanel() {
 											
 										</td>
 								</tr>	
+
+								 <tr valign="top">
+										<th scope="row">Hide Footnotes</th>
+										<td>
+										 <input type="checkbox" name="jqfootnotes_hidefnlist" <?php if (get_option('jqfoot_hidefnlist')==on) echo 'checked="checked"'; ?> /> 
+											 Hide Footnotes in bottom of page. (They will still display in the hover boxes.)
+											
+										</td>
+								</tr>	
+
+								 <tr valign="top">
+										<th scope="row">Disable Hovering</th>
+										<td>
+										 <input type="checkbox" name="jqfootnotes_nohover" <?php if (get_option('jqfoot_nohover')==TRUE) echo 'checked="checked"'; ?> /> 
+											 Disables all js files from loading so the jQuery popups do not display. To see footnotes users will have to
+											click on a reference mark, which will take them to the footnote list at the bottom of the page.
+											(Thus the above option MUST BE UNCHECKED!)	
+										</td>
+								</tr>	
+
 							</table>
 							
 		<!-- Begin Wordpress required fields -->
@@ -159,9 +183,10 @@ function jqFootnotes_options_subpanel() {
 	// User Defined Options.   See readme for notes on changing these variables
 
 	$before_anchor = get_option('jqfoot_anchor_open');		//opening the anchor
-	$after_anchor = get_option('jqfoot_anchor_close');			//closing the anchor
-	$footnotes_title = get_option('jqfoot_title');				//the title to display before the footnotes on the bottom
-	$back_image = get_option('jqfoot_backimg');	
+	$after_anchor = get_option('jqfoot_anchor_close');		//closing the anchor
+	$footnotes_title = get_option('jqfoot_title');			//the title to display before the footnotes on the bottom
+	$back_image = get_option('jqfoot_backimg');
+	$hide_fnlist = (get_option('jqfoot_hidefnlist')) ? 'style="display:none;"' : 'style="display:inherit"' ;	
 
 
 	$foots = array();
@@ -196,7 +221,7 @@ function jqFootnotes_options_subpanel() {
 		// FOOTNOTE HEADING: html for the title of footer footnote section
 		// by using .= we just append it to the end of 'the_content'
 		//old: '.$footnotes_title.'</span><br />';
-		$data .= '<br /><br /><div id="footnote-list"><span id=fn-heading>'.$footnotes_title.'</span> &nbsp;&nbsp;&nbsp;('.$back_image.' returns to text)<br /><ol>';  	
+		$data .= '<br /><br /><div id="footnote-list" '.$hide_fnlist.'><span id=fn-heading>'.$footnotes_title.'</span> &nbsp;&nbsp;&nbsp;('.$back_image.' returns to text)<br /><ol>';  	
 
 		// ACTUAL FOOTNOTE TEXT: html for footnotes in footer area
 		foreach($foots_text as $foot_text){
