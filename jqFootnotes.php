@@ -5,7 +5,7 @@ Plugin Name: JQuery Hover Footnotes
 Plugin URI: http://restoredisrael.org/blog/961/footnote-plugin-test-page/
 Description: Lets you add footnotes with qualifiers of you're choosing, then dynamically displays them when you hover over.
 Author: Lance Weaver
-Version: 1.3
+Version: 1.2
 License: GPLv2
 */
 
@@ -144,9 +144,9 @@ function jqFootnotes_options_subpanel() {
 
   if (!is_admin()){
 	//wp_enqueue_script('jquery');	//no need here, loads as dependancy in next line down
-	wp_enqueue_script('footenote_js', get_option('siteurl') . '/wp-content/plugins/jq-Hover-Footnotes/footnote-voodoo.js', array('jquery'));
+	wp_enqueue_script('footenote_js', plugins_url('/footnote-voodoo.js', __FILE__), array('jquery'));
 	// it would save load to put these css rules into your template css and comment this next line out
-	wp_enqueue_style('footenote_css', get_option('siteurl') . '/wp-content/plugins/jq-Hover-Footnotes/footnote-voodoo.css');			
+	wp_enqueue_style('footenote_css', plugins_url('/footnote-voodoo.css', __FILE__) );			
   
   } //end !is_admin()
 

@@ -92,3 +92,4 @@ To contact, leave a comment on the plugin <a href='http://restoredisrael.org/blo
 = 1.3 =
 * For large footnotes (larger than 150px height of text) made popup height absolute and 
 added a scrollbar.  For small popups, made popup box shrink to fit text.
+* Fixed a bug with enque_script which made script not load with some php versions.
