@@ -4,7 +4,7 @@ Donate link: http://restoredisrael.org/blog/1055/donations/
 Tags: footnotes, jquery, popup, hover
 Requires at least: 2.8
 Tested up to: 3.0.5
-Stable tag: 1.4
+Stable tag: trunk
 
 
 
