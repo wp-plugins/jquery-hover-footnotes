@@ -66,10 +66,26 @@ function jqFootnotes_options_subpanel() {
     <div class="wrap">
     	<div id="icon-options-general" class="icon32"><br /></div>
         <h2>jQuery Hover Footnotes Settings</h2>
-        <form method="post">
 
-            <table class="form-table"> 
-						
+		<!-- Donate Blurb -->
+		<div style="border: 1px solid #6d6; border-radius: 5px; background-color: #efe; padding: 10px;">
+		<table cellpadding="0" cellspacing="0">
+    			<tr>
+    			    <td valign="middle" align="left" width="110">
+        		    <a href="1055/donations/" target="_blank"><img src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif"/></a>
+    			    </td>
+    			    <td valign="top" align="left">
+        		    <strong>Any donation is appreciated.</strong> Donations can be done securely through paypal.</a>.<br />
+        		    <small>If you find my plugins useful, please consider dontating to the cause, or leaving a nice comment on my donation page. :)</small>
+			    <br /><small>Even $1 would make me feel warm, fuzzy and more motivated to further develope free plugins.</small>
+    			    </td>
+    			</tr>
+		</table>
+		</div>
+
+            <table class="form-table"> 				
+            <form method="post">
+
 						
 						<!-- Begin form contents -->
 
@@ -192,15 +208,16 @@ function jqFootnotes_options_subpanel() {
 
 	$foots = array();
 
-	//finding anchors[#] in the text.  search reg exp matches in $data and stick them into new array of numbers, $foots
-	preg_match_all("/\{\{[0-9]*\}\}/", $data, $foots);	
+	//finding anchors[#] in the text.  search reg exp matches in $data and stick them into new array of numbers called $foots[]
+//	preg_match_all("/\{\{[0-9]*\}\}/", $data, $foots);    
+	preg_match_all("/\{\{([^}]+)\}\}/", $data, $foots);   
 
 
 	if(count($foots[0]) != 0){		//there are footnotes to process!
 		$foots_text = array();
 
 
-		foreach($foots[0] as $foot){	//finding the footnotes in the text
+		foreach($foots[0] as $foot){	//finding the footnotes  foreach($array as $value-of-array)
 
 			$foot_num = trim($foot, '{}');						//trim braces{} off number and store it.
 			$foot_delim = '[['.$foot_num.']]';						//put on brackets for later (so both foots and links will have them)
@@ -215,7 +232,7 @@ function jqFootnotes_options_subpanel() {
 			// INLINE FOOTNOTE REFERENCE MARK LINK: html for superscript footnote link/number
 			// replace foot_num with formatted html in $data/'the_content' using str_replace(search_for, replacement string, original string, [# of replacements])
 			// orig: $data = str_replace('{{'.$foot_num.'}}', '<a href="#foot_'.$foot_num.'" name="foot_src_'.$foot_num.'">'.$before_anchor.$foot_num.$after_anchor.'</a>', $data);
-			$data = str_replace('{{'.$foot_num.'}}', '<a class="fn-ref-mark" href="#footnote-'.$foot_num.'" id="ref-footnote-'.$foot_num.'">'.$before_anchor.$foot_num.$after_anchor.'</a>', $data);
+			$data = str_replace('{{'.$foot_num.'}}', '<a class="fn-ref-mark" href="#footnote-'.$foot_num.'" id="refmark-'.$foot_num.'">'.$before_anchor.$foot_num.$after_anchor.'</a>', $data);
 
 		}
 
@@ -226,7 +243,7 @@ function jqFootnotes_options_subpanel() {
 
 		// ACTUAL FOOTNOTE TEXT: html for footnotes in footer area
 		foreach($foots_text as $foot_text){
-			$data .= '<li id="footnote-'.$foot_text[1].'" class="fn-text">'.trim($foot_text[0]).'<a href="#ref-footnote-'.$foot_text[1].'">'.$back_image.'</a></li>';  
+			$data .= '<li id="footnote-'.$foot_text[1].'" class="fn-text">'.trim($foot_text[0]).'<a href="#refmark-'.$foot_text[1].'">'.$back_image.'</a></li>';  
 		}
 		
 		//append the final </ol> and close the </div>

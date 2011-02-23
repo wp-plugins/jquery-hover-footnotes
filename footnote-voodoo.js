@@ -20,12 +20,12 @@ var Footnotes = {
         jQuery('#footnotediv').stop();
         jQuery('#footnotediv').remove();
         
-	 //this doesn't work in wordpress, since wp adds the whole URL to href anchors
-	 // so we must use the next lines to strip off the anchor name.
-        //var id = jQuery(this).attr('href').substr(1); 
-
+	 //old way doesn't work in wordpress, since wp adds the whole URL to href anchors
+	 // so we must use the next lines to strip off the anchor name to set the id.
 	 var hash = this.href.split( '#' ); // Get the ID for the footnote
-	 id = hash.pop( ); // now the hash is the ID
+	 id = hash.pop( ); 			// now the hash is the ID
+        id = decodeURI(id);			// in case our id is an ansi char
+
 
         var position = jQuery(this).offset();
     
@@ -51,18 +51,22 @@ var Footnotes = {
 	   var flowy = 'hidden';
 	 }
 
+	 // if chrome, we need to deactivate opacity because of a scrollbar opacity saturation bug #24524
+	 var opaq = (/chrome/.test( navigator.userAgent.toLowerCase())) ? '1.0' : '0.85' ;
+
         div.css({
             position:'absolute',
 	     overflow:flowy,
             width:width,
 	     height:height,
-            opacity:0.85
+            opacity:opaq
         });
 
         jQuery(document.body).append(div);
 
+	 // logic to assure popup doesnt extend off the browser window side or bottom
         var left = position.left;
-	 var width = (width=='') ? div.width() : 400;
+	 var width = (width=='') ? div.width() : 400;      //if tiny, adjust placement
         if(left + width + 30  > jQuery(window).width() + jQuery(window).scrollLeft()) 
             left = jQuery(window).width() - width - 60 + jQuery(window).scrollLeft();
         var top = position.top+20;
@@ -73,6 +77,8 @@ var Footnotes = {
             top:top
         });
     },
+    // controls the disappearance animation of the popup window
+    //.animate( properties, [ duration ], [ easing ], [ complete ])
     footnoteoout: function() {
         Footnotes.footnotetimeout = setTimeout(function() {
             jQuery('#footnotediv').animate({
